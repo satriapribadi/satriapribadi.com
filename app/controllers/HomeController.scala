@@ -27,9 +27,10 @@ class HomeController @Inject()
   }
 
   def getUserById(id: Long) = AuthorizedAction(oauthDataHandler).async { implicit request =>
-    userService.findById(id).map {
-      x => println(x)
-        Ok(views.html.index("Hello World"))
+    userService.findById(id).map { x =>
+      Ok(views.html.index(x.get.displayName))
+    }.recover {
+      case ex: Exception => Ok(views.html.index(ex.getMessage))
     }
   }
 
