@@ -2,6 +2,7 @@ package services.impl
 
 import javax.inject.{Inject, Singleton}
 
+import exception.BusinessException
 import models.User
 import play.api.cache.CacheApi
 import repositories.UserRepository
@@ -22,7 +23,7 @@ class UserServiceImpl @Inject()
   override def findById(id: Long): Future[Option[User]] = {
     cache.getOrElse[Future[Option[User]]](Constants.User.CACHE_PREFIX_ID(id), 5.minutes) {
       userRepository.findById(Some(id)).map { x =>
-        if (x.isDefined) x else throw new Exception(Constants.User.USER_NOT_FOUND)
+        if (x.isDefined) x else throw BusinessException(Constants.User.USER_NOT_FOUND)
       }
     }
   }

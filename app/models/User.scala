@@ -2,6 +2,7 @@ package models
 
 import com.github.tototoshi.slick.MySQLJodaSupport._
 import org.joda.time.DateTime
+import play.api.libs.json.Json
 import slick.driver.MySQLDriver.api._
 
 /**
@@ -22,6 +23,9 @@ case class User(
                  updatedAt: Option[DateTime] = Some(DateTime.now)
                ) extends BaseModel
 
+object User extends utils.Json {
+  implicit val userFormat = Json.format[User]
+}
 
 class UserTable(tag: Tag) extends BaseTable[User](tag, "users") {
   def login = column[String]("user_login")
@@ -42,7 +46,7 @@ class UserTable(tag: Tag) extends BaseTable[User](tag, "users") {
 
   def displayName = column[String]("display_name")
 
-  def * = (id.?, login, password, niceName, email, url.?, registerDate, activationKey, status, displayName, createdAt.?, updatedAt.?) <>(User.tupled, User.unapply)
+  def * = (id.?, login, password, niceName, email, url.?, registerDate, activationKey, status, displayName, createdAt.?, updatedAt.?) <>((User.apply _).tupled, User.unapply)
 
   def loginIdx = index("user_login_key", login, unique = true)
 
