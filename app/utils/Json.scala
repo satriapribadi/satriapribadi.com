@@ -2,6 +2,7 @@ package utils
 
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
+import play.api.libs.json.Reads._
 import play.api.libs.json.{JsString, Reads, Writes}
 
 /**
@@ -14,4 +15,7 @@ trait Json {
 
   implicit val writesDateTime = Writes[DateTime](dt =>
     JsString(DateTimeFormat.forPattern("dd-MM-yyyy HH:mm:ss").print(dt)))
+
+  def url(implicit reads: Reads[String]): Reads[String] =
+    pattern("""^(http:\/\/|https:\/\/)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$""".r, "error.url")
 }
