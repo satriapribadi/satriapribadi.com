@@ -2,18 +2,87 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+### NoDocs ###
+GET           /docs/swagger.json            @controllers.ApiSpecs.specs
+### NoDocs ###
+GET           /docs/swagger-ui/*file        controllers.Assets.at(path:String="/public/lib/swagger-ui", file:String)
+
+
+### NoDocs ###
 # Oauth token
-POST          /oauth/access_token        controllers.OauthController.accessToken
+POST          /oauth/access_token           controllers.OauthController.accessToken
 
 # An example controller showing a sample home page
-GET           /                          controllers.HomeController.index
+GET           /                             controllers.HomeController.index
 
-# User Routes
-POST          /user                      controllers.UserController.createUser
-PUT           /user                      controllers.UserController.updateUser
-GET           /user                      controllers.UserController.getAllUser
-GET           /user/:id                  controllers.UserController.getUserById(id: Long)
-DELETE        /user/:id                   controllers.UserController.deleteUser(id: Long)
+###
+#  summary: create a user
+#  parameters:
+#    - name: body
+#      description: create a user
+#      schema:
+#        $ref: '#/definitions/models.User'
+#  responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.User'
+###
+POST          /user                         controllers.UserController.createUser
+###
+#  summary: update a user
+#  parameters:
+#    - name: body
+#      description: update a user
+#      schema:
+#        $ref: '#/definitions/models.User'
+#  responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.User'
+#    404:
+#      description: not found
+#      schema:
+#        $ref: '#/definitions/models.ErrorResponse'
+###
+PUT           /user                         controllers.UserController.updateUser
+###
+#  summary: get all user
+#  responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.User'
+###
+GET           /user                         controllers.UserController.getAllUser
+###
+#  summary: get a user by id
+#  responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.User'
+#    404:
+#      description: not found
+#      schema:
+#        $ref: '#/definitions/models.ErrorResponse'
+###
+GET           /user/:id                     controllers.UserController.getUserById(id: Long)
+###
+#  summary: delete a user by id
+#  responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.User'
+#    404:
+#      description: not found
+#      schema:
+#        $ref: '#/definitions/models.ErrorResponse'
+###
+DELETE        /user/:id                     controllers.UserController.deleteUser(id: Long)
 
+### NoDocs ###
 # Map static resources from the /public folder to the /assets URL path
-GET           /assets/*file              controllers.Assets.versioned(path="/public", file: Asset)
+GET           /assets/*file                 controllers.Assets.versioned(path="/public", file: Asset)

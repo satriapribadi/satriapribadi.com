@@ -32,3 +32,6 @@ libraryDependencies ++= Seq(
   "joda-time" % "joda-time" % "2.7",
   "org.joda" % "joda-convert" % "1.7"
 )
+
+libraryDependencies +=  "com.iheart" %% "play-swagger" % "0.2.1-PLAY2.5"
+libraryDependencies += "org.webjars" % "swagger-ui" % "2.1.4"
