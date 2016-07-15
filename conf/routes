@@ -2,18 +2,26 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# An example controller showing a sample home page
+GET           /                             controllers.HomeController.index
+
+################################### Swagger Routes ###################################
+
 ### NoDocs ###
 GET           /docs/swagger.json            @controllers.ApiSpecs.specs
 ### NoDocs ###
 GET           /docs/swagger-ui/*file        controllers.Assets.at(path:String="/public/lib/swagger-ui", file:String)
 
+################################### End Swagger Routes ###################################
+
+################################### Oauth token ###################################
 
 ### NoDocs ###
-# Oauth token
 POST          /oauth/access_token           controllers.OauthController.accessToken
 
-# An example controller showing a sample home page
-GET           /                             controllers.HomeController.index
+################################### End Oauth token ###################################
+
+################################### User Routes ###################################
 
 ###
 #  summary: create a user
@@ -82,6 +90,8 @@ GET           /user/:id                     controllers.UserController.getUserBy
 #        $ref: '#/definitions/models.ErrorResponse'
 ###
 DELETE        /user/:id                     controllers.UserController.deleteUser(id: Long)
+
+################################### End User Routes ###################################
 
 ### NoDocs ###
 # Map static resources from the /public folder to the /assets URL path
